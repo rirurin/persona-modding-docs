@@ -1,0 +1,71 @@
+.tableMain {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-bottom: var(--ifm-leading);
+    border-top: 1px solid var(--ifm-toc-border-color);
+    border-left: 1px solid var(--ifm-toc-border-color);
+}
+
+.tableRow {
+    display: flex;
+    flex-direction: row;
+    border-bottom: 1px solid var(--ifm-toc-border-color);
+    width: 100%;
+}
+
+.tableColumn {
+    display: flex;
+    flex-direction: column;
+    border-right: 1px solid var(--ifm-toc-border-color);
+    padding: 8px;
+    width: 100%;
+    align-items: stretch;
+}
+
+.videoSliderMain {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    margin-bottom: var(--ifm-leading);
+    border: 1px solid var(--ifm-toc-border-color);
+}
+.videoSliderVideo {
+    flex-grow: 2;
+    border-right: 1px solid var(--ifm-toc-border-color);
+}
+.videoSliderControls {
+    flex-grow: 1;
+    margin: 8px 0 8px 0;
+    padding: 8px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+.fadeEntry {
+    display: flex;
+    flex-direction: row;
+    margin-bottom: var(--ifm-leading);
+    border: 1px solid var(--ifm-toc-border-color);
+}
+.fadeInfo {
+    display: flex;
+    flex-direction: column;
+    flex-basis: 100%;
+    align-items: flex-start;
+    border-right: 1px solid var(--ifm-toc-border-color);
+}
+.fadeId {
+    border-bottom: 1px solid var(--ifm-toc-border-color);
+    padding: 8px;
+    width: 100%
+}
+.fadeCppType {
+    border-bottom: 1px solid var(--ifm-toc-border-color);
+    padding: 8px;
+    width: 100%;
+}
+.fadeDescription {
+    padding: 8px;
+    width: 100%;
+}

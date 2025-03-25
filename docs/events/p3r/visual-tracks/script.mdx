@@ -1,0 +1,23 @@
+# Script
+
+Run a flowscript procedure at the given keyframe.
+
+The referenced binary flow asset has it’s target procedure index called.
+
+## Flowscript Overview
+
+The syntax of flowscript is similar to C/C++, so things like arithmetic, control flow and array indexing are possible within it.
+
+## C++ Structure
+
+```c++
+struct FEvtScriptPayload {
+public:
+    struct FName EventName;
+    int32 ProcNo;
+    class UBfAsset* BfAsset;
+    bool bPauseSequencer;
+    bool bUseBmdAssetInBfAsset;
+    class UBmdAsset* BmdAsset;
+}
+```

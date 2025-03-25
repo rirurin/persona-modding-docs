@@ -1,0 +1,292 @@
+---
+sidebar_position: 1
+---
+
+# Character Animation
+
+import commonStyle from "../common.module.css";
+import { useState } from 'react';
+
+Plays an animation on the character object that it’s attached to.
+
+The behavior of the animation, such as if it loops or not, the slot to apply the animation to and various playback parameters are all controllable.
+
+## Usage
+
+This track is previewable in PIE preview, though some of the features of it haven’t been implemented.
+To add it onto a 
+*Add New Track Name: **\[P3RE\] Character Anim**. Applicable to event character blueprints.*
+
+## Parameters
+
+For any given keyframe within the Character Animation track, the following options are available:
+
+![](/assets/images/events/p3r/chara-anim-menu-param-sample.png)
+
+### Slot Type
+
+The slot type should be adjusted based on what animation you intend on playing at the time. 
+
+- **DefaultSlot** is used for base animations, which is anything named `A_[Char ID]_[Anim ID]_[Anim Type]_[Anim Name]`, where Anim Type is BASE or POSE. These are currently the only type of animations that play properly in PIE, since they don't require
+any form of animation blending. To test other types of animations, it's best to do it in game for now, though support for them may be added to PIE in the future.
+- **User** allows you to assign the animation to the slot defined in SlotName. In existing events, this is sometimes used over setting the slot type in the dropdown. 
+Note that `SlotType = User` and `SlotName = DefaultSlot` is the same as `SlotType = DefaultSlot` and `SlotName = [any text]`. 
+
+BASE anims have character movement, while POSE holds the given character movement.
+
+<div className={commonStyle.tableMain}>
+    <div className={commonStyle.tableRow}>
+        <div className={commonStyle.tableColumn}>
+        </div>
+        <div className={commonStyle.tableColumn}>
+            NodSlot is used for nod additive anims - for each character, the anims `AnmCommon/A_[Char Name]_CMA0049_ADDB_NodN` and `AnmCommon/A_[Char ID]_CMA0052_ADDB_NeckSwingN` are applied to NodSlot.
+            <br/>
+            You can see this used in `Event_Cmmu_106_010` - `A_PC0001_CMA0052_ADDB_NeckSwingN` (yes, Yuko uses Makoto’s head shake) is called to run as a simple montage:
+        </div>
+    </div>
+</div>
+
+Facial Slot is used for facial additive anims - this is any additive anim with the naming convention A_[Char Name]_CMF[Facial Anim ID]_POSE_[Facial Anim Name]. For example, in Event_Cmmu_106_010 (Yuko Rank 1), you can see Yuko’s facial expression switch from sad, to angry, then to neutral:
+
+ArmL and ArmR are for applying additive anims that adjust the position of the character’s arms to fit a bag strap. This slot should be used for A_[Char ID]_CMA0055_ADDP_BagR and A_[Char ID]_CMA0056_ADDP_BagL as an animation loop. For example, in Event_Cmmu_002_050, the protag and Yukari have bag anim tracks for the duration of the event.
+
+### Character Animation Type
+
+Defines what behavior the target animation will have. The options available are shown in the table below using the default playback parameters:
+`Default Slot, StartOffset = 0.0, EndOffset = 0.0, BlendIn = 0.0, BlendOut = 0.0, 1.0x Speed`
+
+<div className={commonStyle.tableMain}>
+    <div className={commonStyle.tableRow}>
+        <div className={commonStyle.tableColumn}>
+            **Simple Montage**
+
+            Plays the target animation once.
+        </div>
+        <div className={commonStyle.tableColumn}>
+            TODO: Video preview
+        </div>
+    </div>
+    <div className={commonStyle.tableRow}>
+        <div className={commonStyle.tableColumn}>
+            **Loop Animation Single**
+
+            Plays the target animation continuously.
+        </div>
+        <div className={commonStyle.tableColumn}>
+            TODO: Video preview
+        </div>
+    </div>
+    <div className={commonStyle.tableRow}>
+        <div className={commonStyle.tableColumn}>
+            **Loop Animation On Last Frame**
+
+            TODO: Description
+        </div>
+        <div className={commonStyle.tableColumn}>
+            TODO: Video preview
+        </div>
+    </div>
+    <div className={commonStyle.tableRow}>
+        <div className={commonStyle.tableColumn}>
+            **Loop Animation Single with Start Offset**
+
+            TODO: Description
+        </div>
+        <div className={commonStyle.tableColumn}>
+            TODO: Video preview
+        </div>
+    </div>
+    <div className={commonStyle.tableRow}>
+        <div className={commonStyle.tableColumn}>
+            **Keep World**
+
+            Does nothing 
+        </div>
+    </div>
+</div>
+
+### Playback Parameters
+
+export function LabelSlider({name, min, max, step}) {
+    const [ value, setValue ] = useState("0");
+    return (
+    <label>
+        <span style={{ fontWeight: "bold" }}>
+            {name}:
+        </span> {value}
+        <br/>
+        <input style={{ width: "100%" }}
+        type="range" value={value} onChange={e => setValue(e.target.value)} min={min} max={max} step={step}/>
+    </label>
+    );
+}
+
+export function VideoSlider({name}) {
+
+    return (
+        <div className={commonStyle.videoSliderMain}>
+            <div className={commonStyle.videoSliderVideo}>
+                <video width="100%" autoPlay muted playsInline loop style={{
+                    margin: "8px 0 8px 0",
+                    padding: "8px"
+                }}>
+                    <source src="/persona-modding-docs/assets/video/events/p3r/chara-anim-start-offset-0.mp4" type="video/mp4"/>
+                </video>
+            </div>
+            <div className={commonStyle.videoSliderControls}>
+                <div class="event-edit-video-slider-slider" style={{ width: "100%" }}>
+                    <LabelSlider name={name} min="0" max="1" step="0.5"/>
+                </div>
+                <div class="event-edit-video-slider-description">
+                    <span>
+                    The time in seconds to blend from the previous animation playing on the target slot.
+                    <br/>
+                    0.2 and 0.5 secs are commonly used values.
+                    </span>
+                </div>
+            </div>
+        </div>
+    );
+}
+
+<VideoSlider name="StartOffset"/>
+<VideoSlider name="EndOffset"/>
+<VideoSlider name="BlendIn"/>
+<VideoSlider name="BlendOut"/>
+<VideoSlider name="PlayRate"/>
+
+### Anim Array
+
+Animation arrays are a way to play a list of animations, one after another without worrying about the exact frame that they have to play at. 
+If the array isn’t empty, the character animation type will apply to the last anim in the array. 
+The example below shows an example of an anim array, going from `A_PC0001_CMA0024_BASE_Laugh` to `A_PC0001_CMA0039_BASE_Sit` to `A_PC0001_CMA0038_BASE_Stand`
+
+:::note
+In this example, the standing anim is what is getting looped
+:::
+
+## Technical Details
+A list of all animation slots in `/CharacterBase/Human/Blueprints/Animation/ABP_CH_MeshBase`:
+
+
+<div className={commonStyle.tableMain}>
+    <div className={commonStyle.tableRow}>
+        <div className={commonStyle.tableColumn}>
+            <span>DefaultGroup</span>
+        </div>
+        <div className={commonStyle.tableColumn}>
+            <span>DefaultSlot</span>
+            <span>EventSlot</span>
+            <span>BattleSlot</span>
+        </div>
+    </div>
+    <div className={commonStyle.tableRow}>
+        <div className={commonStyle.tableColumn}>
+            <span>FacialGroup</span>
+        </div>
+        <div className={commonStyle.tableColumn}>
+            <span>FacialSlot</span>
+        </div>
+    </div>
+    <div className={commonStyle.tableRow}>
+        <div className={commonStyle.tableColumn}>
+            <span>EyeGroup</span>
+        </div>
+        <div className={commonStyle.tableColumn}>
+            <span>EyeSlot</span>
+        </div>
+    </div>
+    <div className={commonStyle.tableRow}>
+        <div className={commonStyle.tableColumn}>
+            <span>MouthGroup</span>
+        </div>
+        <div className={commonStyle.tableColumn}>
+            <span>MouthSlot</span>
+        </div>
+    </div>
+    <div className={commonStyle.tableRow}>
+        <div className={commonStyle.tableColumn}>
+            <span>NodGroup</span>
+        </div>
+        <div className={commonStyle.tableColumn}>
+            <span>NodSlot</span>
+        </div>
+    </div>
+    <div className={commonStyle.tableRow}>
+        <div className={commonStyle.tableColumn}>
+            <span>Layering Override Group</span>
+        </div>
+        <div className={commonStyle.tableColumn}>
+            <span>Arms</span>
+            <span>Pelvis</span>
+            <span>Spine</span>
+            <span>Arm L</span>
+            <span>Arm R</span>
+            <span>Head</span>
+            <span>Curves</span>
+        </div>
+    </div>
+    <div className={commonStyle.tableRow}>
+        <div className={commonStyle.tableColumn}>
+            <span>MovementActionGroup</span>
+        </div>
+        <div className={commonStyle.tableColumn}>
+            <span>BaseLayer</span>
+            <span>(3) UpperBody</span>
+        </div>
+    </div>
+    <div className={commonStyle.tableRow}>
+        <div className={commonStyle.tableColumn}>
+            <span>Grounded Group</span>
+        </div>
+        <div className={commonStyle.tableColumn}>
+            <span>Grounded Slot</span>
+            <span>(N) Turn/Rotate</span>
+            <span>(CLF) Turn/Rotate</span>
+        </div>
+    </div>
+    <div className={commonStyle.tableRow}>
+        <div className={commonStyle.tableColumn}>
+            <span>Layering2ndGroup</span>
+        </div>
+        <div className={commonStyle.tableColumn}>
+            <span>(2)Ext Arm L</span>
+            <span>(2)Ext Arm R</span>
+        </div>
+    </div>
+    <div className={commonStyle.tableRow}>
+        <div className={commonStyle.tableColumn}>
+            <span>LegGroup</span>
+        </div>
+        <div className={commonStyle.tableColumn}>
+            <span>Legs</span>
+        </div>
+    </div>
+    <div className={commonStyle.tableRow}>
+        <div className={commonStyle.tableColumn}>
+            <span>SkirtGroup</span>
+        </div>
+        <div className={commonStyle.tableColumn}>
+            <span>Skirt</span>
+        </div>
+    </div>
+</div>
+
+Internally, when the sequencer reaches any given keyframe in the chara anim track, a function call to a method in `UBFLEventMovieScene` will be made depending on what the current character animation type is (e.g setting anim type to SimpleMontage calls `UBFLEventMovieScene::CreateSlotOffsetAnimationAsDynamicMontage`). These methods are abstractions over the Unreal method `UAnimMontage::CreateSlotAnimationAsDynamicMontage`, with extra logic to handle non zero playback offsets and anim loops.
+
+## C++ Structure
+```c++
+struct FEvtCharaAnimation {
+public:
+    class UAnimSequenceBase* Animation;
+    struct FName SlotName;
+    enum EEvtCharaAnimationSlotType SlotType;
+    float StartOffset;
+    float EndOffset;
+    float BlendIn;
+    float BlendOut;
+    float PlayRate;
+    enum EEvtCharaAnimationType CharaAnimationType;
+    struct TArray<FAtlSlotMultiAnimationParam> AnimArray;
+}
+```

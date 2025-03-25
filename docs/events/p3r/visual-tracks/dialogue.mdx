@@ -1,0 +1,273 @@
+# Dialogue
+
+Creates a message dialog.
+
+:::note
+A lot of the early documentation for dialogue editing in P3RE will reference function tags as starting with `[uf` (e.g `[uf 2 1]` instead of `[f 2 1]`). This tutorial uses the `[f` format, which is the common naming convention used in other Atlus games (see [Text Editing in P5R](https://gamebanana.com/tuts/15363) for reference).
+:::
+
+## Creating Messages
+
+## Creating Selections
+
+All selections are tied to messages, and a selection named SEL_MAJOR_MINOR_SUB will be called when With Select is true, and Select Message Major ID, Select Message Major ID and Select Message Major ID are set to the values for Major, Minor and Sub respectively.
+This is showing MSG_006_0_0 with the selection SEL_007_0_0:
+
+```
+[msg MSG_006_0_0 [Junpei Iori]]
+[f 2 1][bup 3 1 102 65535 0 0][vp 1 0 0 7 0 0]Yo, [nf]... [nf]![n][w][e]
+[f 2 1][bup 3 1 102 65535 0 0][vp 1 0 0 8 0 0]So, which one's your type?[n][w][e]
+
+[sel SEL_007_0_0 top]
+[f 2 1]Yukari.[e]
+[f 2 1]Fuuka.[e]
+[f 2 1]Mitsuru.[e]
+[f 2 1]I like men.[e]
+```
+
+And here’s the call for it in the sequencer - it’s the fourth option (value 3), and plays at frame 390.
+
+Select Response to Local Data sets what slot in the event subsystem the selected option will be saved into, in this case Slot 0. The selected option value goes from the top down, so Yukari = 0, Fuuka = 1, Mitsuru = 2 and I like men = 3.
+Checking the dialogue track that matches the given event slot (Conditional No) and selection value for Yukari:
+
+We’ll see that it calls MSG_008_0_0
+
+```
+[msg MSG_008_0_0 [Junpei Iori]]
+[f 2 1][bup 3 1 102 65535 0 0][vp 1 0 0 9 0 0]Aha! Just as I thought.[n][w][e]
+```
+
+
+## List of Vanilla Function Tags
+
+The following describes what each (currently documented) message function available in P3RE does
+
+### Color
+Function Tags: `[f 0 1 color]` or `[clr color]`
+
+Sets the text following this tag to the value given in the `color` parameter. The value can be any number between 0 and 45, which represent the following:
+
+export function BmdColor({ index, hexcode }) {
+    return (
+        <div className="event-edit-bmd-color-entry" style={{
+        display: "flex",
+        flexDirection: "row",
+        alignItems: "center",
+        border: "1px solid var(--ifm-toc-border-color)"
+    }}>
+        <div className="event-edit-bmd-color-index" style={{
+            flexGrow: 1,
+            padding: "8px",
+            borderRight: "1px solid var(--ifm-toc-border-color)"
+        }}>
+            {index}
+        </div>
+        <div className="event-edit-bmd-color-hexcode" style={{
+            flexGrow: 1,
+            padding: "8px",
+            borderRight: "1px solid var(--ifm-toc-border-color)"
+        }}>
+            {hexcode}
+        </div>
+        <div className="event-edit-bmd-color-color" style={{
+            flexGrow: 1,
+            padding: "8px",
+            backgroundColor: {hexcode},
+            height: "100%"
+        }}>
+        </div>
+    </div>
+    );
+}
+
+<BmdColor index="0" hexcode="0xffffffff"/>
+<BmdColor index="0" hexcode="0x7afdffff"/>
+<BmdColor index="0" hexcode="0x3838ffff"/>
+<BmdColor index="0" hexcode="0xfffe86ff"/>
+<BmdColor index="0" hexcode="0x6ef00ff"/>
+<BmdColor index="0" hexcode="0x50321eff"/>
+<BmdColor index="0" hexcode="0xdc6e00ff"/>
+<BmdColor index="0" hexcode="0xffffffff"/>
+<BmdColor index="0" hexcode="0x50321eff"/>
+<BmdColor index="0" hexcode="0xff1800ff"/>
+<BmdColor index="0" hexcode="0xba0000ff"/>
+<BmdColor index="0" hexcode="0x1200ffff"/>
+<BmdColor index="0" hexcode="0x1f00baff"/>
+<BmdColor index="0" hexcode="0x0ac000ff"/>
+<BmdColor index="0" hexcode="0x078600ff"/>
+<BmdColor index="0" hexcode="0x9D00EFFF"/>
+<BmdColor index="0" hexcode="0x78008eff"/>
+<BmdColor index="0" hexcode="0xbf9d02ff"/>
+<BmdColor index="0" hexcode="0xff0391ff"/>
+<BmdColor index="0" hexcode="0xff00fcff"/>
+<BmdColor index="0" hexcode="0xbd0054ff"/>
+<BmdColor index="0" hexcode="0x00aeffff"/>
+<BmdColor index="0" hexcode="0x90401aff"/>
+<BmdColor index="0" hexcode="0x161616FF"/>
+<BmdColor index="0" hexcode="0x404040ff"/>
+<BmdColor index="0" hexcode="0x656565ff"/>
+<BmdColor index="0" hexcode="0xe6b625ff"/>
+<BmdColor index="0" hexcode="0xffffffff"/>
+<BmdColor index="0" hexcode="0xf0f3fcff"/>
+<BmdColor index="0" hexcode="0xe4d4c7ff"/>
+<BmdColor index="0" hexcode="0x505050ff"/>
+<BmdColor index="0" hexcode="0xffffffff"/>
+<BmdColor index="0" hexcode="0xffffffff"/>
+<BmdColor index="0" hexcode="0x06ef00ff"/>
+<BmdColor index="0" hexcode="0x7afdffff"/>
+<BmdColor index="0" hexcode="0x45feffff"/>
+<BmdColor index="0" hexcode="0x45feffff"/>
+<BmdColor index="0" hexcode="0xff690aff"/>
+<BmdColor index="0" hexcode="0xff690aff"/>
+<BmdColor index="0" hexcode="0xff690aff"/>
+<BmdColor index="0" hexcode="0xff690aff"/>
+<BmdColor index="0" hexcode="0xff690aff"/>
+<BmdColor index="0" hexcode="0xff690aff"/>
+<BmdColor index="0" hexcode="0x45feffff"/>
+<BmdColor index="0" hexcode="0xffea35ff"/>
+<BmdColor index="0" hexcode="0xffea35ff"/>
+
+### Wait for Input
+Function Tags: `[f 1 1]` or `[nl]`
+
+### Play Voice
+Function Tags: `[f 3 1]` or `[nl]`
+
+### First Name
+Function Tags: `[f 4 1]` or `[nl]`
+
+When in game, this will print the protagonist's first name (last name in CJK). In PIE, this prints "FIRSTNAM"
+
+### Last Name
+Function Tags: `[f 4 2]` or `[nf]`
+
+When in game, this will print the protagonist's last name (first name in CJK). In PIE, this prints "LASTNAME"
+
+### Full Name
+Function Tags: `[f 4 3]`
+
+When in game, this will print the protagonist's full name. In PIE, this prints "FIRSTNAM LASTNAME"
+
+### Bustup
+Function Tags: `[f 4 5 chara face outfit 65535 0 0]` or `[bup chara face outfit 65535 0 0]`
+
+Get the path for a particular bustup:
+
+import styles from './bustup.module.css';
+
+export function BustupPathResolver() {
+    return (
+        <div className={styles.event_edit_bmd_bustup_path_resolver}>
+            <div className={styles.event_edit_bmd_bustup_path_section}>
+                <span style={{ fontWeight: "bold"}}>Character ID</span>
+                <input type="input"/>
+            </div>
+            <div className={styles.event_edit_bmd_bustup_path_section}>
+                <span style={{ fontWeight: "bold"}}>Face ID</span>
+                <input type="input"/>
+            </div>
+            <div className={styles.event_edit_bmd_bustup_path_section}>
+                <span style={{ fontWeight: "bold"}}>Outfit ID</span>
+                <input type="input"/>
+            </div>
+        </div>
+    );
+}
+
+<BustupPathResolver/>
+
+### Character Cutin
+
+Function Tags: `[f 4 5 chara expr 0]` or `[cut chara expr 0]`
+- The `chara` parameter denotes the character's ID.
+- The `expr` parameter denotes the expression's ID. The expression ID can be any of the following:
+
+Get the path for a particular cutin:
+
+| Expression ID | Description | 
+| - | - |
+| 0 | todo
+| 1 | todo
+| 2 | todo
+| 3 | todo
+| 4 | todo
+
+### Unused Message Tags
+
+- `[f 0 0]` - Null function
+- `[f 0 2]` - Null function
+- `[f 0 3]` - Null function
+- `[f 0 4]` - Null function
+- `[f 0 5]` - Null function
+- `[f 0 6]` - Null function
+- `[f 0 7]` - Null function
+- `[f 1 0]` - Null function
+- `[f 1 7]` - Null function
+- `[f 1 8]` - Null function
+- `[f 1 9]` - Null function
+- `[f 1 10]` - Null function
+- `[f 1 11]` - Null function
+- `[f 1 12]` - Does nothing
+- `[f 1 13]` - Null function
+- `[f 2 0]` - Null function
+- `[f 2 6]` - Null function
+- `[f 2 7]` - Null function
+- `[f 2 8]` - Null function
+- `[f 3 0]` - Null function
+- `[f 4 0]` - Null function
+- `[f 4 9]` - Null function
+- `[f 4 10]` - Null function
+- `[f 4 11]` - Null function
+- `[f 4 12]` - Null function
+- `[f 4 13]` - Null function
+- `[f 4 14]` - Null function
+- `[f 4 15]` - Null function
+- `[f 4 16]` - Null function
+- `[f 4 19]` - Null function
+- `[f 4 20]` - Null function
+- `[f 4 24]` - Does nothing
+- `[f 4 28]` - Null function
+- `[f 4 29]` - Does nothing
+- `[f 4 32]` - Null function
+- `[f 5 0]` - Null function
+- `[f 5 7]` - Does nothing
+- `[f 5 9]` - Null function
+- `[f 5 10]` - Null function
+- `[f 5 11]` - Null function
+- `[f 5 12]` - Null function
+- `[f 5 14]` - Null function
+- `[f 5 15]` - Null function
+- `[f 5 16]` - Null function
+- `[f 5 17]` - Null function
+- `[f 5 18]` - Null function
+- `[f 5 19]` - Null function
+- `[f 6 0]` - Null function
+- `[f 6 1]` - Null function
+- `[f 7 0]` - Null function
+- `[f 7 1]` - Null function
+- `[f 7 2]` - Null function
+
+## C++ Structure
+
+```c++
+struct FEvtDialoguePayload {
+public:
+    struct FName EventName;
+    int32 MessageNo;
+    int32 MessageMajorID;
+    int32 MessageMinorID;
+    int32 MessageSubID;
+    int32 MessagePageID;
+    class UBmdAsset* BmdAsset;
+    bool bMessageRefAffected;
+    bool bPauseSequencer;
+    int32 EventMessageID;
+    int32 SeqEventMessageID;
+    bool bWithSelect;
+    int32 SelectID;
+    int32 SelectMessageMajorID;
+    int32 SelectMessageMinorID;
+    int32 SelectMessageSubID;
+    int32 SelectResponceToLocalDataID;
+}
+```

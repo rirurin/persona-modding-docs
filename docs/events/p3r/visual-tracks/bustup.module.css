@@ -1,0 +1,16 @@
+.event_edit_bmd_bustup_path_resolver {
+    display: "flex";
+    flex-direction: "row";
+    align-items: "center";
+    margin-bottom: "var(--ifm-leading)";
+    border: "1px solid var(--ifm-toc-border-color)";
+  }
+  
+.event_edit_bmd_bustup_path_section {
+  flex-grow: 1;
+  border-right: "1px solid var(--ifm-toc-border-color)";
+}
+
+.tableMain {
+    background-color: #ff0000;
+}

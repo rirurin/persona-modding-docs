@@ -1,0 +1,69 @@
+---
+sidebar_position: 2
+---
+
+# Character Handwriting
+
+import commonStyle from "../common.module.css";
+import { useState } from 'react';
+
+Spawns in a reaction icon, according to the set handwriting type.
+
+## Parameters
+
+### Handwriting Type
+
+<div className={commonStyle.tableMain}>
+    <div className={commonStyle.tableRow}>
+        <div className={commonStyle.tableColumn}>
+            **Handwriting Type**
+        </div>
+        <div className={commonStyle.tableColumn}>
+            **Settings**
+        </div>
+        <div className={commonStyle.tableColumn}>
+            **Preview**
+        </div>
+    </div>
+    <div className={commonStyle.tableRow}>
+        <div className={commonStyle.tableColumn}>
+            **AngerMark**
+        </div>
+        <div className={commonStyle.tableColumn}>
+            TODO: Video Preview
+        </div>
+    </div>
+    <div className={commonStyle.tableRow}>
+        <div className={commonStyle.tableColumn}>
+            **Calling**
+        </div>
+        <div className={commonStyle.tableColumn}>
+            TODO: Video Preview
+        </div>
+    </div>
+    <div className={commonStyle.tableRow}>
+        <div className={commonStyle.tableColumn}>
+            **DoorKnock 00**
+        </div>
+        <div className={commonStyle.tableColumn}>
+            TODO: Video Preview
+        </div>
+    </div>
+</div>
+
+## Examples
+
+
+## Technical Details
+
+## C++ Structure
+
+```c++
+struct FEvtAdxSoundFadePayload {
+public:
+    struct FName EventName;
+    enum EEvtAdxSoundFadeType Type;
+    int32 Time;
+    float TargetVolume;
+}
+```

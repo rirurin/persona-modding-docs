@@ -1,0 +1,77 @@
+# Fade Screen
+Fade the screen in or out.
+
+import commonStyle from "../common.module.css";
+import { useState } from 'react';
+
+:::note
+Fade Screen is a special track since it’s not bound to a target object, so it’s stored at the root of the sequence:
+![](/assets/images/events/p3r/UE4Editor_D8aL1nbYCp.png)
+:::
+
+It’s available in the green new track button under Atlus Event Fade Screen Track. The color parameters determine what the fill color is that the fade is going from or fading into.
+
+:::note
+TODO: Thing about fade colors
+:::
+
+## Fade Screen Type
+- `EVT_FADESCREEN_FADE_IN`
+- `EVT_FADESCREEN_FADE_OUT`
+- `EVT_FADESCREEN_CROSSFADE_IN`
+- `EVT_FADESCREEN_CROSSFADE_OUT`
+
+A fade ID of -1 will inherit whatever fade type was set previously.
+## Fade Types
+
+export function FadeEntry({ id, cppClass, desc, video }) {
+    return (
+        <div className={commonStyle.fadeEntry}>
+            <div className={commonStyle.fadeInfo}>
+                <div className={commonStyle.fadeId}>
+                    <span style={{ fontWeight: "bold"}}>ID:</span> {id}
+                </div>
+                <div className={commonStyle.fadeCppType}>
+                    <code>{cppClass}</code>
+                </div>
+                <div className={commonStyle.fadeDescription}>
+                    {desc}
+                </div>
+            </div>
+            <div class="event-edit-fade-video" style={{
+                padding: "8px", width: "50%"
+            }}>
+                <video width="100%" autoPlay muted playsInline loop>
+                    <source src="/persona-modding-docs/assets/video/events/p3r/fade-track-pgcolorout.mp4" type="video/mp4"/>
+                </video>
+            </div>
+        </div>
+    );
+}
+
+<FadeEntry id="0" cppClass="UFadePgColorOut" desc="Color value sets the fill color" video="fade-track-pgcolorout.mp4"/>
+<FadeEntry id="1" cppClass="UFadePgCrossFade" desc="Is not affected by color values" video="fade-track-pgcolorout.mp4"/>
+<FadeEntry id="2" cppClass="UFadePgCircle" desc="Is not affected by color values" video="fade-track-pgcolorout.mp4"/>
+<FadeEntry id="3" cppClass="UFadePgSlide" desc="Is not affected by color values" video="fade-track-pgcolorout.mp4"/>
+<FadeEntry id="4" cppClass="UFadePgDarkHour" desc="Is not affected by color values" video="fade-track-pgcolorout.mp4"/>
+<FadeEntry id="5" cppClass="UFadePgVelvet" desc="Is not affected by color values" video="fade-track-pgcolorout.mp4"/>
+<FadeEntry id="6" cppClass="UFadePgVelvetReturn" desc="Is not affected by color values" video="fade-track-pgcolorout.mp4"/>
+<FadeEntry id="7" cppClass="UFadePgSlideVertical" desc="Is not affected by color values" video="fade-track-pgcolorout.mp4"/>
+<FadeEntry id="8" cppClass="UFadePgBattleResult" desc="Is not affected by color values" video="fade-track-pgcolorout.mp4"/>
+<FadeEntry id="9" cppClass="UFadePgBattleEventWipe" desc="Is not affected by color values" video="fade-track-pgcolorout.mp4"/>
+<FadeEntry id="10" cppClass="UFadePgBattleResultEnd" desc="Is not affected by color values" video="fade-track-pgcolorout.mp4"/>
+
+## C++ Structure
+
+```c++
+struct FEvtFadeScreenPayload {
+public:
+    struct FName EventName;
+    enum EEvtFadeScreenType FadeScreenType;
+    int32 FadeType;
+    int32 FadeFrame;
+    uint8 ColorR;
+    uint8 ColorG;
+    uint8 ColorB;
+}
+```
